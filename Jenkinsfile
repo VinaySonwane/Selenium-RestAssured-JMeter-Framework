@@ -1,12 +1,10 @@
 pipeline {
-    // Allows Jenkins to run this on any available node/server
     agent any
 
-    // Ensure these names match the tools configured in your Jenkins dashboard
-  tools {
-          maven 'Maven'
-          jdk 'JDK'
-      }
+    tools {
+        maven 'Maven'
+        jdk 'JDK'
+    }
 
     stages {
         stage('1. Checkout Repository') {
@@ -16,28 +14,17 @@ pipeline {
             }
         }
 
-        stage('2. Functional Automation (UI & API)') {
+        stage('2. Test Execution (UI, API, & Performance)') {
             steps {
-                echo 'Executing Cucumber TestRunner (Selenium & RestAssured)...'
-                // Using 'bat' for Windows.
+                echo 'Executing TestRunner (Selenium, RestAssured, and native JMeter CLI)...'
                 bat 'mvn clean test'
-            }
-        }
-
-        stage('3. Performance Load Testing (JMeter)') {
-            steps {
-                echo 'Functional tests passed! Initiating JMeter load test...'
-                // Executes your LoadTest.jmx file headlessly
-                bat 'mvn jmeter:jmeter'
             }
         }
     }
 
-    // This block executes regardless of whether the tests pass or fail
     post {
         always {
             echo 'Compiling Test Metrics and Generating Allure Dashboard...'
-            // Requires the Allure Jenkins Plugin to be installed
             allure([
                 includeProperties: false,
                 jdk: '',
