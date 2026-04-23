@@ -3,10 +3,10 @@ pipeline {
     agent any
 
     // Ensure these names match the tools configured in your Jenkins dashboard
-    tools {
-        maven 'Maven3'
-        jdk 'JDK21'
-    }
+  tools {
+          maven 'Maven'
+          jdk 'JDK'
+      }
 
     stages {
         stage('1. Checkout Repository') {
