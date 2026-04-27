@@ -4,11 +4,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class CheckoutPage {
     WebDriver driver;
 
-    // Locators for the Checkout Form
     @FindBy(id = "first-name")
     WebElement firstNameInput;
 
@@ -21,7 +23,6 @@ public class CheckoutPage {
     @FindBy(id = "continue")
     WebElement continueBtn;
 
-    // Locators for the Final Review Page
     @FindBy(className = "summary_total_label")
     WebElement totalPriceLabel;
 
@@ -37,6 +38,11 @@ public class CheckoutPage {
     }
 
     public void enterCheckoutDetails(String firstName, String lastName, String zipCode) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Wait for the first name input to be completely visible and ready
+        wait.until(ExpectedConditions.visibilityOf(firstNameInput));
+
         firstNameInput.sendKeys(firstName);
         lastNameInput.sendKeys(lastName);
         zipCodeInput.sendKeys(zipCode);
@@ -44,7 +50,8 @@ public class CheckoutPage {
     }
 
     public String getTotalPrice() {
-        // This will grab text like "Total: $43.18"
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(totalPriceLabel));
         return totalPriceLabel.getText();
     }
 
@@ -53,6 +60,8 @@ public class CheckoutPage {
     }
 
     public String getConfirmationMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(orderConfirmationMsg));
         return orderConfirmationMsg.getText();
     }
 }

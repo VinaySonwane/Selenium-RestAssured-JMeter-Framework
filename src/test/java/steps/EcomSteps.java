@@ -5,19 +5,19 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
 import org.openqa.selenium.By;
+import pages.LoginPage;
 import pages.ProductsPage;
-import pages.CheckoutPage;
 import base.BaseTest;
 
 public class EcomSteps {
 
     ProductsPage productsPage;
-    CheckoutPage checkoutPage;
+    LoginPage.CheckoutPage checkoutPage;
 
     // Constructor: Initializes the Page Objects using your BaseTest driver
     public EcomSteps() {
         productsPage = new ProductsPage(BaseTest.getDriver());
-        checkoutPage = new CheckoutPage(BaseTest.getDriver());
+        checkoutPage = new LoginPage.CheckoutPage(BaseTest.getDriver());
     }
 
     // 1. Navigate to the correct website
